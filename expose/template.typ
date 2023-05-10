@@ -65,8 +65,8 @@
   set page(
     paper: paper-size,
     margin: 1.75in,
-    //footer-descent: 50pt,
-    footer: box(inset: (x: 0pt, y: 6em), height:100%, width:100%, align(bottom, locate(loc => {
+    footer-descent: 0pt,
+    footer: align(horizon, locate(loc => {
       // Add footnotes for this page
       let footnotes = footnote-list.at(loc)
       if footnotes.len() > 0 {
@@ -84,7 +84,7 @@
       // Centered page numbers
       let page_nr = counter(page).at(loc).first()
       align(center, text(size: script-size, [#page_nr]))
-    }))),
+    })),
   )
 
   show outline: it => box(inset: 3em, it)

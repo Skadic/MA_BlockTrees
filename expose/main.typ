@@ -13,9 +13,10 @@
 
 #outline(
   indent: true,
+  depth: 2,
 )
 
 #include "01_introduction.typ";
 #include "02_theory.typ";
+#include "03_block_trees.typ"
 
-//#bibliography("MA.bib", title: text(10pt)[References], style: "ieee")

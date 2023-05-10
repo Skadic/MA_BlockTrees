@@ -1,7 +1,9 @@
 #import "utils.typ": *
 #import "template.typ": *
 
-= Motivation
+= Introduction
+
+== Motivation
 
 Over the course of the past few decades, the volume of available data has skyrocketed and, as such, has created new challenges for storing and working with this data. As such, methods for handling this growth are becoming more relevant by the second.
 One example relevant to this paper is the field of bioinformatics.
@@ -25,15 +27,19 @@ which allows efficient access, rank and select queries while only requiring spac
 It is a tree-like structure, recursively dividing the text into blocks and replacing repeated text segments with a pointer to the left on the same level
 and has recently been successfully used to encode the topology of a suffix tree with a good space-time tradeoff @caceres_faster_2022.
 
-= Problem
+== Problem
 
 While the Block Tree allows storing the text efficiently, there are still avenues for improvement in its construction.
 The construction algorithm described in the original paper @belazzougui_block_2021 does not offer parallelism and as such,
 does not take advantage of the many cores available in modern processors.
 
+#pagebreak(weak: true)
 = Goals <sec:goals>
 
 The goal of this thesis is to accelerate the original Block Tree construction algorithm through parallelism while ideally staying asymptotically close to the memory consumption of the original algorithm.
+While the Block Tree allows for rank and select operations with additional data structures,
+it is not expected for the calculation thereof to play any significant part in the run time requirements of the algorithm.
+As such, the focus of this thesis will be on the Block Tree for access queries.
 
 == Main Goal
 
@@ -71,17 +77,19 @@ This results in a recursive data structure.
 Of course, Block Tree-compressed bit vectors will not offer the same performance as uncompressed bit vectors and as such,
 the recursion depth to which this compression is worth it, remains to be explored through testing. 
 
-= Tools
+= Method
+
+== Tools
 
 The implementation will be in C++ using OpenMP#footnote[#link("https://www.openmp.org/")] for parallelism.
 The concurrent hash map implementation#footnote[#link("https://github.com/TooBiased/growt")] to be used is due to Maier et al. @maier_concurrent_2019.
 For compressed vectors, Patrick Dinklage's implementation will be used#footnote[#link("https://github.com/pdinklag/word-packing")].
 Our implementation will be compared to Manuel Cáceres' implementation#footnote[#link("https://github.com/elarielcl/MinimalistBlockTrees")].
-We will apply all implementations to large, primarily repetitive, texts such as those from the Pizza & Chili corpus#footnote[#link("http://pizzachili.dcc.uchile.cl/")]
+We will apply all implementations to large, primarily repetitive, texts such as those from the Pizza & Chili corpus#footnote[#link("http://pizzachili.dcc.uchile.cl/")].
 
 These are subject to change, in case better-suited alternatives are found or problems arise.
 
-= Outline
+== Outline
 
 The first section will be a brief introduction into the topic, which is followed by a section of theoretical foundations relevant to this thesis.
 Next, we describe Block Trees themselves and prior work on their construction more extensively, including the original construction algorithm @belazzougui_block_2021 more extensively, followed by the main work of this thesis outlined in @sec:goals.
@@ -97,13 +105,12 @@ The resulting preliminary outline is as follows:
 6. Evaluation
 7. Conclusion
 
-#pagebreak(weak: true)
-= Time Schedule
+== Time Schedule
 
 An approximate preliminary time schedule is depicted in @tab:thesis-time-schedule.
 
 #let schedule-color = blue;
-#figure(caption: [Prelimiary time schedule.])[
+#figure(caption: [Preliminary time schedule.])[
   #text(font: sans-serif, table(
     columns: (1fr, auto, auto, auto, auto, auto, auto),
     inset: 10pt,
