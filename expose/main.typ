@@ -16,6 +16,6 @@
 )
 
 #include "01_introduction.typ";
-#include "02_preliminaries.typ";
+#include "02_theory.typ";
 
-#bibliography("MA.bib", title: text(10pt)[References], style: "ieee")
+//#bibliography("MA.bib", title: text(10pt)[References], style: "ieee")

@@ -5,8 +5,20 @@
 #let large-size = 12pt
 
 #let sans-serif = "DM Sans"
+#let serif = "STIX Two Text"
+#let monospace = "Roboto Mono"
 
 #let tu-green = rgb(132, 184, 23)
+
+
+#let footnote-list = state("footnote-list", ())
+
+#let footnote(content) = locate(loc => {
+  let nr = footnote-list.at(loc).len() + 1
+  footnote-list.update(list => { list.push((content, loc)); list })
+  super[#nr]
+})
+
 
 #let ieee(
   // The paper's title.
@@ -39,17 +51,40 @@
   set document(title: title, author: author)
 
   // Set the body font.
-  set text(font: "STIX Two Text", size: normal-size)
+  set text(font: serif, size: normal-size)
+
+  show link: it => {
+    if type(it.dest) == "string" {
+      underline[#text(font: monospace, it)]
+    } else {
+        it
+    }
+  }
 
   // Configure the page.
   set page(
     paper: paper-size,
-    // The margins depend on the paper size.
     margin: 1.75in,
-    footer: locate(loc => {
-      let i = counter(page).at(loc).first()
-      align(center, text(size: script-size, [#i]))
-    }),
+    //footer-descent: 50pt,
+    footer: box(inset: (x: 0pt, y: 6em), height:100%, width:100%, align(bottom, locate(loc => {
+      // Add footnotes for this page
+      let footnotes = footnote-list.at(loc)
+      if footnotes.len() > 0 {
+        text(size: footnote-size, { 
+          for (i, footnote) in footnotes.enumerate() {
+            let nr = i + 1;
+            link(footnote.last())[#strong[#nr: ]] 
+            footnote.first() 
+            linebreak()
+          }
+        })
+      }
+      footnote-list.update(())
+
+      // Centered page numbers
+      let page_nr = counter(page).at(loc).first()
+      align(center, text(size: script-size, [#page_nr]))
+    }))),
   )
 
   show outline: it => box(inset: 3em, it)
@@ -194,6 +229,6 @@
     show bibliography: set text(8pt)
     set heading(outlined: false)
     pagebreak(weak: true)
-    //bibliography(bibliography-file, title: text(10pt)[References], style: "ieee")
+    bibliography(bibliography-file, title: text(10pt)[References], style: "ieee")
   }
 }

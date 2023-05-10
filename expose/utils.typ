@@ -1,4 +1,5 @@
-#import "template.typ": sans-serif
+#import "template.typ": sans-serif, footnote-size, footnote-list
+
 
 #let theorem(body, numbered: true, supplement: [Theorem], title: none) = figure(
   kind: "theorem",
@@ -25,3 +26,5 @@
 #let todo(color: red, body) = box(width: 100%, inset: 0.5em, fill: color, radius: 0.2em,
   text(fill: white, font: sans-serif, [#strong( "TODO:") #body])
 )
+
+

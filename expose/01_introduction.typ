@@ -16,7 +16,7 @@ Traditionally, data structures like the #emph[Wavelet Tree] @grossi_high-order_2
 While the Wavelet Tree can be compressed to require asymptotically equal space to the Huffman-compressed text @huffman_method_1952, this does not adequately take advantage of the redundancies contained in highly repetitive text. 
 
 One such scheme is the #emph[LZ77 parsing] @ziv_universal_1977 by Lempel and Ziv.
-As an important component of popular compressors like #emph[gzip], work has been done on approximations with more efficient construction #cite("bille_lempel-ziv_2017","ferreira_time_2009") and parallel implementations of the parsing @shun_practical_2013.
+As an important component of popular compressors like #emph[gzip]#footnote[#link("https://www.gzip.org/")], work has been done on approximations with more efficient construction #cite("bille_lempel-ziv_2017","ferreira_time_2009") and parallel implementations of the parsing @shun_practical_2013.
 While it is a parsing well-known for being able to exploit repetitiveness for compression, it is also known to be difficult to access arbitrary subsequences from an LZ77-compressed text efficiently @kreft_lz77-like_2010.
 For this reason, schemes approximating LZ77 while still allowing efficient retrieval of substrings have been proposed in the literature #cite("kreft_lz77-like_2010", "belazzougui_block_2021").
 
@@ -31,7 +31,7 @@ While the Block Tree allows storing the text efficiently, there are still avenue
 The construction algorithm described in the original paper @belazzougui_block_2021 does not offer parallelism and as such,
 does not take advantage of the many cores available in modern processors.
 
-= Goals
+= Goals <sec:goals>
 
 The goal of this thesis is to accelerate the original Block Tree construction algorithm through parallelism while ideally staying asymptotically close to the memory consumption of the original algorithm.
 
@@ -45,12 +45,13 @@ writing and reading concurrently to the hash table.
 
 There are at least two ways to approach this.
 The first one is the use of a global concurrent hash table to and from which every thread can write and read concurrently.
+One problem that could arise is that multiple threads write to locations in the hash table that are close to each other.
+This could lead to cache invalidation and thus reduce performance.
 
-Another option is to use sharding, instead using one hash table per processor and only allowing one processor to access each hash table. 
+To remedy this, one can try to use sharding. We instead use one hash table per processor and only allow one processor to access each hash table. 
 The hash tables together form one contiguous range, but being pairwise disjunct.
 Whenever a read or write is requested by any processor $p$, it can identify the processor $q$ whose part of the hash table would contain the hashed value.
 The operation is then inserted into a queue for processor $q$ and subsequently handled by processor $q$.
-This might lead to improvements in cache efficiency.
 
 == Minor Goals
 
@@ -60,7 +61,7 @@ There have been implementations of the Rabin-Karp search algorithm which use the
 Alternatively, acceleration using SIMD instructions might also prove efficient.
 
 Each level in the Block Tree contains a bit vector marking which blocks are leaves and which are internal blocks containing children.
-In addition, for each level the back pointers and corresponding offsets need to be saved. 
+In addition, for each level the back pointers and corresponding offsets need to be saved.
 An improvement option is the use of parallel vectors and bit vectors which allow parallel writes and reads.
 
 The last improvement is the compression of the aforementioned bit vectors.
@@ -70,11 +71,64 @@ This results in a recursive data structure.
 Of course, Block Tree-compressed bit vectors will not offer the same performance as uncompressed bit vectors and as such,
 the recursion depth to which this compression is worth it, remains to be explored through testing. 
 
-#let footnote(content) = {
-  text(size: footnote-size, content)
-}
-
-
 = Tools
 
-This will be implemented in C++ using #footnote[my footnote]
+The implementation will be in C++ using OpenMP#footnote[#link("https://www.openmp.org/")] for parallelism.
+The concurrent hash map implementation#footnote[#link("https://github.com/TooBiased/growt")] to be used is due to Maier et al. @maier_concurrent_2019.
+For compressed vectors, Patrick Dinklage's implementation will be used#footnote[#link("https://github.com/pdinklag/word-packing")].
+Our implementation will be compared to Manuel Cáceres' implementation#footnote[#link("https://github.com/elarielcl/MinimalistBlockTrees")].
+We will apply all implementations to large, primarily repetitive, texts such as those from the Pizza & Chili corpus#footnote[#link("http://pizzachili.dcc.uchile.cl/")]
+
+These are subject to change, in case better-suited alternatives are found or problems arise.
+
+= Outline
+
+The first section will be a brief introduction into the topic, which is followed by a section of theoretical foundations relevant to this thesis.
+Next, we describe Block Trees themselves and prior work on their construction more extensively, including the original construction algorithm @belazzougui_block_2021 more extensively, followed by the main work of this thesis outlined in @sec:goals.
+This is followed by a description of implementation details.
+The last two sections will be a practical evaluation and a closing section discussing the results and future possible work.
+The resulting preliminary outline is as follows:
+
+1. Introduction
+2. Theoretical Foundations
+3. Block Trees
+4. Parallelization
+5. Implementation
+6. Evaluation
+7. Conclusion
+
+#pagebreak(weak: true)
+= Time Schedule
+
+An approximate preliminary time schedule is depicted in @tab:thesis-time-schedule.
+
+#let schedule-color = blue;
+#figure(caption: [Prelimiary time schedule.])[
+  #text(font: sans-serif, table(
+    columns: (1fr, auto, auto, auto, auto, auto, auto),
+    inset: 10pt,
+    align: horizon,
+    fill: (col, row) => {
+      if row == 1 and col >= 1 and col <= 2 {
+        schedule-color
+      } else if row == 2 and col >= 1 and col <= 3 {
+        schedule-color
+      } else if row == 3 and col >= 3 and col <= 4 {
+        schedule-color
+      } else if row == 4 and col == 4 {
+        schedule-color
+      } else if row == 5 and col >= 4 and col <= 5 {
+        schedule-color
+      } else if row == 6 and col == 6 {
+        schedule-color
+      }
+    },
+    [*Month*], [*1*], [*2*], [*3*], [*4*], [*5*], [*6*], 
+    [Research (Sec. 2+3)], [], [], [], [], [], [], 
+    [Implementation (Sec. 4+5)], [], [], [], [], [], [], 
+    [Evaluation (Sec. 6)], [], [], [], [], [], [], 
+    [Introduction & Conclusion (Sec. 1+7)], [], [], [], [], [], [],
+    [Revision], [], [], [], [], [], [],
+    [Buffer], [], [], [], [], [], [], 
+  ))
+] <tab:thesis-time-schedule>
