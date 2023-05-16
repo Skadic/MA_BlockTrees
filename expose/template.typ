@@ -6,7 +6,7 @@
 
 #let sans-serif = "DM Sans"
 #let serif = "STIX Two Text"
-#let monospace = "Roboto Mono"
+#let monospace = "DM Mono"
 
 #let tu-green = rgb(132, 184, 23)
 
