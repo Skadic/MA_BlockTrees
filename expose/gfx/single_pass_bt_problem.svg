@@ -92,8 +92,8 @@
 <g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
 <use xlink:href="#glyph-0-2" x="12.154792" y="23.56832"/>
 </g>
-<path fill="none" stroke-width="0.3985" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M -25.104447 8.66752 L -25.104447 22.839395 L -137.670854 22.839395 L -137.670854 9.124551 " transform="matrix(1, 0, 0, -1, 205.17476, 23.04252)"/>
+<path fill="none" stroke-width="0.3985" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-dasharray="0.3985 1.99255" stroke-miterlimit="10" d="M -25.104447 8.66752 L -25.104447 22.839395 L -137.670854 22.839395 L -137.670854 9.124551 " transform="matrix(1, 0, 0, -1, 205.17476, 23.04252)"/>
 <path fill="none" stroke-width="0.31879" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M -1.194014 1.593656 C -1.096358 0.996 0.00129875 0.101469 0.298174 -0.00009375 C 0.00129875 -0.09775 -1.096358 -0.996187 -1.194014 -1.593844 " transform="matrix(0, 1, 1, 0, 67.504, 13.91667)"/>
-<path fill="none" stroke-width="0.3985" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M -122.327104 8.66752 L -122.327104 16.069864 L -192.065385 16.069864 " transform="matrix(1, 0, 0, -1, 205.17476, 23.04252)"/>
+<path fill="none" stroke-width="0.3985" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-dasharray="0.3985 1.99255" stroke-miterlimit="10" d="M -122.327104 8.66752 L -122.327104 16.069864 L -192.065385 16.069864 " transform="matrix(1, 0, 0, -1, 205.17476, 23.04252)"/>
 <path fill="none" stroke-width="0.31879" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M -1.197078 1.593356 C -1.095515 0.9957 -0.001765 0.101169 0.299016 -0.00039375 C -0.001765 -0.09805 -1.095515 -0.996488 -1.197078 -1.594144 " transform="matrix(-1, 0, 0, 1, 13.10761, 6.97305)"/>
 </svg>

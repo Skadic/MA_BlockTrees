@@ -41,11 +41,11 @@ However, since @def:time and @def:work do not consider the number of processors,
 
 === Example
 
-Let us consider the problem of summing all values in an array $A[1..n]$.
-
 #figure(caption: [A visualization of the addition problem.], 
   image(width: 70%, "gfx/par_plus.svg")
 ) <fig:par-plus>
+
+Let us consider the problem of summing all values in an array $A[1..n]$.
 
 For simplicity, we assume that $n$ is a power of two.
 A sequential algorithm to solve this is to iterate through the array and sum every value into an accumulator.
@@ -54,7 +54,7 @@ So we have $T^*(n) = cal(O)(n)$.
 
 For the parallel version, we have every processor add a value at an even index to its neighbor to the right.
 This yields $n/2$ new values. This process is repeated until there is only one value left, which is the result. As we can only divide $n$ by two $lg n$ times, this results in $T(n) = cal(O)(lg n)$ time. 
-We can also see that the total work required for this algorithm is $cal(O)(n)$. Since as depicted in @fig:par-plus, this algorithm can be visualized as a binary tree with $n$ leaves. This results in $n-1$ internal nodes, which each represent one addition. So, $W(n) = cal(O)(n)$.
+We can also see that the total work required for this algorithm is $cal(O)(n)$. Since, as depicted in @fig:par-plus, this algorithm can be visualized as a binary tree with $n$ leaves. This results in $n-1$ internal nodes, which each represent one addition. So, $W(n) = cal(O)(n)$.
 
 To reach the above time, we obviously need $p >= n/2$ processors to be available for the first parallel addition step.
 If we were to run this algorithm on a machine with $p < n/2$ processors, omitting most of the $cal(O)$-Notation for simplicity, we can use @theo:scheduling-principle to get

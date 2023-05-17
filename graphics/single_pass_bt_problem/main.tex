@@ -18,8 +18,8 @@
   \node[above=3mm of dots2] (dummy) {};
 
 
-  \draw[->] (block.north west) -- ++(0,5mm) |- ([yshift=5mm,xshift=3.5em]source_l.north west) -- ([xshift=3.5em]source_l.north west);
-  \draw[->] (source_r.north west) |- (dummy);
+  \draw[->,dotted] (block.north west) -- ++(0,5mm) |- ([yshift=5mm,xshift=3.5em]source_l.north west) -- ([xshift=3.5em]source_l.north west);
+  \draw[->,dotted] (source_r.north west) |- (dummy);
 \end{tikzpicture}
 \end{document}
 

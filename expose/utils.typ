@@ -1,4 +1,4 @@
-#import "template.typ": sans-serif, footnote-size, footnote-list
+#import "template.typ": sans-serif, monospace, footnote-size, footnote-list
 
 
 #let theorem(body, numbered: true, supplement: [Theorem], title: none) = figure(
@@ -27,4 +27,14 @@
   text(fill: white, font: sans-serif, [#strong( "TODO:") #body])
 )
 
+#let sser(body) = text(font: sans-serif, body)
+#let monosp(body) = text(font: monospace, body)
 
+#let inlinebox(body) = box(stroke:black, outset: (y: 2pt), inset:(x:4pt), text(font: sans-serif, body))
+
+#let proof(body) = block(spacing: 11.5pt, {
+  emph[Proof.]
+  [ ] + body
+  h(1fr)
+  box(scale(160%, origin: bottom + right, sym.square.stroked))
+})

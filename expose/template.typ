@@ -133,6 +133,15 @@
     v(-2em)
   }) 
 
+  show figure: it => align(center, box(inset: (y: 1em), {
+    it.body
+    box(inset: (x: 1em), align(left, {
+      text(font: sans-serif, [*#it.supplement #it.counter.display()*])
+      [ ]
+      [#it.caption]
+    }))
+  }))
+
   // Theorems
   show figure.where(kind: "theorem"): it => block(above: 11.5pt, below: 11.5pt, {
     show par: set block(spacing: 0.58em)
@@ -162,6 +171,7 @@
     h(5pt)
     emph(it.body)
   })
+
 
   grid(
     columns: (50%, 50%),
@@ -198,7 +208,7 @@
       Technische Universität Dortmund \
       Department of Computer Science \
       Algorithm Engineering (LS-11) \
-      #link("https://ls11-www.cs.tu-dortmund.de")
+      #text(size: small-size, link("https://ls11-www.cs.tu-dortmund.de"))
     ]
   })
   

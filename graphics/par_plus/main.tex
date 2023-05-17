@@ -4,7 +4,7 @@
 \usetikzlibrary{positioning,arrows}
 
 \begin{document}
-\begin{tikzpicture}[level/.style={sibling distance=40mm/#1},arrow/.style={draw=black, <-, shorten >=1pt}, edge from parent/.style={arrow}]
+\begin{tikzpicture}[level distance=9mm,level/.style={sibling distance=40mm/#1},arrow/.style={draw=black, <-, shorten >=1pt}, edge from parent/.style={arrow}]
 	\node[circle,draw] {+}
 	child {node[circle,draw] {+}
 			child {node[circle,draw] {+}
