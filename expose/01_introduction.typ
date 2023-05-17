@@ -43,10 +43,10 @@ As such, the focus of this thesis will be on the Block Tree for access queries.
 
 == Main Goal
 
-The main goal is to improve the use of hash tables in the original algorithm.
-It is the most significant time sink in the original algorithm, so the objective is to accelerate the manner in which hash tables are used.
-For each level in the tree, each block's Rabin-Karp fingerprint @rabin_fingerprinting_1981 needs to be saved in a hash table,
-The first improvement is to split the text and have each processor handle a segment of the input, 
+Since the access to hash tables is most significant time sink in the original algorithm,
+the main objective of this thesis is to accelerate the manner in which hash tables are used.
+For each level in the tree, each block's Rabin-Karp fingerprint @rabin_fingerprinting_1981 needs to be saved in a hash table.
+The first improvement is to split the text into roughly equal segments and have each processor handle one of these segments, 
 writing and reading concurrently to the hash table.
 
 There are at least two ways to approach this.
@@ -54,10 +54,11 @@ The first one is the use of a global concurrent hash table to and from which eve
 One problem that could arise is that multiple threads write to locations in the hash table that are close to each other.
 This could lead to cache invalidation and thus reduce performance.
 
-To remedy this, one can try to use sharding. We instead use one hash table per processor and only allow one processor to access each hash table. 
-The hash tables together form one contiguous range, but being pairwise disjunct.
+To remedy this, one can try to use sharding.
+We instead use one hash table per processor and only allow one processor to access each hash table. 
+The hash tables together cover a contiguous range of keys, but the hash table's ranges are being pairwise disjunct.
 Whenever a read or write is requested by any processor $p$, it can identify the processor $q$ whose part of the hash table would contain the hashed value.
-The operation is then inserted into a queue for processor $q$ and subsequently handled by processor $q$.
+The operation is then inserted into a queue for processor $q$ and subsequently handled by $q$.
 
 == Minor Goals
 
@@ -66,7 +67,7 @@ Since a large amount of Rabin-Karp hashes must be calculated, it is plausible th
 There have been implementations of the Rabin-Karp search algorithm which use the GPU #cite("shah_improved_2018", "moeini_parallel_2019"), so acceleration of hashing using the GPU might be possible.
 Alternatively, acceleration using SIMD instructions might also prove efficient.
 
-Each level in the Block Tree contains a bit vector marking which blocks are leaves and which are internal blocks containing children.
+Each level in the Block Tree contains a bit vector marking which blocks are replaced by pointers and which are internal blocks containing children.
 In addition, for each level the back pointers and corresponding offsets need to be saved.
 An improvement option is the use of parallel vectors and bit vectors which allow parallel writes and reads.
 
@@ -81,21 +82,21 @@ the recursion depth to which this compression is worth it, remains to be explore
 
 == Tools
 
-The implementation will be in C++ using OpenMP#footnote[#link("https://www.openmp.org/")] for parallelism.
+We will implementing in C++ using OpenMP#footnote[#link("https://www.openmp.org/")] for parallelism.
 The concurrent hash map implementation#footnote[#link("https://github.com/TooBiased/growt")] to be used is due to Maier et al. @maier_concurrent_2019.
 For compressed vectors, Patrick Dinklage's implementation will be used#footnote[#link("https://github.com/pdinklag/word-packing")].
-Our implementation will be compared to Manuel Cáceres' implementation#footnote[#link("https://github.com/elarielcl/MinimalistBlockTrees")].
-We will apply all implementations to large, primarily repetitive, texts such as those from the Pizza & Chili corpus#footnote[#link("http://pizzachili.dcc.uchile.cl/")].
+Our Block Tree implementation will be compared to the one by Manuel Cáceres'#footnote[#link("https://github.com/elarielcl/MinimalistBlockTrees")].
+We will test all implementations on large, primarily repetitive, texts such as those from the Pizza & Chili corpus#footnote[#link("http://pizzachili.dcc.uchile.cl/")].
 
 These are subject to change, in case better-suited alternatives are found or problems arise.
 
 == Outline
 
 The first section will be a brief introduction into the topic, which is followed by a section of theoretical foundations relevant to this thesis.
-Next, we describe Block Trees themselves and prior work on their construction more extensively, including the original construction algorithm @belazzougui_block_2021 more extensively, followed by the main work of this thesis outlined in @sec:goals.
-This is followed by a description of implementation details.
+Next, we describe Block Trees themselves and their construction more extensively.
+This is followed by a description of implementation details for the implementation of this thesis.
 The last two sections will be a practical evaluation and a closing section discussing the results and future possible work.
-The resulting preliminary outline is as follows:
+The resulting tentative outline is as follows:
 
 1. Introduction
 2. Theoretical Foundations
