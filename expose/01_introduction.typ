@@ -22,7 +22,7 @@ As an important component of popular compressors like #emph[gzip]#footnote[#link
 While it is a parsing well-known for being able to exploit repetitiveness for compression, it is also known to be difficult to access arbitrary subsequences from an LZ77-compressed text efficiently @kreft_lz77-like_2010.
 For this reason, schemes approximating LZ77 while still allowing efficient retrieval of substrings have been proposed in the literature #cite("kreft_lz77-like_2010", "belazzougui_block_2021").
 
-While on its face departing from the usual idea of the LZ77 parsing, Belazzougui et al.'s #emph[Block Tree] @belazzougui_block_2021 is one such approximation
+While at first glance departing from the usual idea of the LZ77 parsing, Belazzougui et al.'s #emph[Block Tree] @belazzougui_block_2021 is one such approximation
 which allows efficient access, rank and select queries while only requiring space approximating the size of the text's LZ77 parsing @ziv_universal_1977.
 It is a tree-like structure, recursively dividing the text into blocks and replacing repeated text segments with a pointer to the left on the same level
 and has recently been successfully used to encode the topology of a suffix tree with a good space-time tradeoff @caceres_faster_2022.
