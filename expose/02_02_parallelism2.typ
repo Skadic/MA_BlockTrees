@@ -3,7 +3,7 @@
 == Parallelism
 
 For sequential algorithms, the notion of runtime is usually sufficient when trying to evaluate the time efficiency of an algorithm.
-However, for parallel algorithms, this metric is insufficient in describing the parallel algorithm's efficiency, since now the actual time efficiency also depends on other values like the number of processors.
+However, for parallel algorithms, this metric is insufficient in describing the parallel algorithm's efficiency.//, since now the actual time efficiency also depends on other values like the number of processors.
 Since the goal of a parallel algorithm is to solve a problem more efficiently, we need metrics to quantify our improvements and evaluate the algorithm's performance. We will also get into what "more efficiently" exactly means.
 
 First, we need a measure of the parallel algorithm's performance gain over the best sequential solution.
