@@ -1,4 +1,4 @@
-#import "template.typ": sans-serif, monospace, footnote-size, footnote-list
+#import "template.typ": sans-serif, monospace, footnote-size
 
 
 #let theorem(body, numbered: true, supplement: [Theorem], title: none) = figure(

@@ -33,7 +33,6 @@ While the Block Tree allows storing the text efficiently, there are still avenue
 The construction algorithm described in the original paper @belazzougui_block_2021 does not offer parallelism and as such,
 does not take advantage of the many cores available in modern processors.
 
-#pagebreak(weak: true)
 = Goals <sec:goals>
 
 The goal of this thesis is to accelerate the original Block Tree construction algorithm through parallelism while ideally staying asymptotically close to the memory consumption of the original algorithm.

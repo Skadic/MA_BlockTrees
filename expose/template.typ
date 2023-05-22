@@ -10,16 +10,6 @@
 
 #let tu-green = rgb(132, 184, 23)
 
-
-#let footnote-list = state("footnote-list", ())
-
-#let footnote(content) = locate(loc => {
-  let nr = footnote-list.at(loc).len() + 1
-  footnote-list.update(list => { list.push((content, loc)); list })
-  super[#nr]
-})
-
-
 #let ieee(
   // The paper's title.
   title: "Paper Title",
@@ -61,31 +51,33 @@
     }
   }
 
+  let section_title = state("section_title", [])
+
   // Configure the page.
   set page(
     paper: paper-size,
     margin: 1.75in,
-    footer-descent: 0pt,
-    footer: align(horizon, locate(loc => {
-      // Add footnotes for this page
-      let footnotes = footnote-list.at(loc)
-      if footnotes.len() > 0 {
-        text(size: footnote-size, { 
-          for (i, footnote) in footnotes.enumerate() {
-            let nr = i + 1;
-            link(footnote.last())[#strong[#nr: ]] 
-            footnote.first() 
-            linebreak()
-          }
-        })
+    header: locate(loc => {
+      let sec = counter(heading).at(loc).first(); 
+      if sec > 0 {
+        align(right, text(
+          font: serif,
+          size: large-size,
+          weight: "semibold",
+          style: "italic", 
+          [Section #sec. #section_title.display()]
+        ))
       }
-      footnote-list.update(())
-
+      counter(footnote).update(0)
+    }),
+    footer: align(horizon, locate(loc => {
       // Centered page numbers
       let page_nr = counter(page).at(loc).first()
       align(center, text(size: script-size, [#page_nr]))
     })),
   )
+
+  show footnote.entry: set text(size: footnote-size)
 
   show outline: it => box(inset: 3em, it)
 
@@ -106,6 +98,7 @@
       if not it.outlined {
         it
       } else if it.level == 1 {
+        section_title.update(it.body)
         h(0.3em)
         box(
           fill: tu-green,
