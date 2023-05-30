@@ -38,3 +38,5 @@
   h(1fr)
   box(scale(160%, origin: bottom + right, sym.square.stroked))
 })
+
+#let urlfootnote(url, date) = footnote([#link(url), last accessed: #date])

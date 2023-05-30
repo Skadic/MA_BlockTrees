@@ -3,7 +3,7 @@
 #show: ieee.with(
   title: "Parallel Block Tree Construction",
   author: "Etienne Palanga (201482)",
-  examiners: ("Prof. Dr. Johannes Fischer", "Dr. Florian Kurpicz"),
+  examiners: ("Prof. Dr. Johannes Fischer", "Dr. Florian Kurpicz (Karlsruher Institut für Technologie)"),
   deadline: "November 2023",
   thesis-type: "Master Thesis",
   bibliography-file: "MA.bib",

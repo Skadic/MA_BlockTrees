@@ -2,15 +2,15 @@
 
 = Block Trees
 
-The Block Tree was first described by Belazzougui et al. @belazzougui_block_2021
+The block tree was first described by Belazzougui et al. @belazzougui_block_2021
 and allows access to the underlying string in logarithmic time while only requiring space approximating the LZ77 parsing @ziv_universal_1977 of the text.
 It also offers other operations like rank and select queries at the cost of extra space. 
-In the following, we will describe the Block Tree and its original construction algorithm more in depth.
+In the following, we will describe the block tree and its original construction algorithm more in depth.
 
 #definition(title: [Block Tree @belazzougui_block_2021])[
 Let $S in Sigma^n$ be a string over the alphabet $Sigma$.
 In addition, let $tau > 1$ and $s > 1$ be extra parameters.
-The _Block Tree_ is a tree-like data structure whose root has arity $s$ and every other node with children has arity $tau$.
+The _block tree_ is a tree-like data structure whose root has arity $s$ and every other node with children has arity $tau$.
 Each node represents a segment of the text.
 A node on layer $h$ (where layer $0$ is the root node) represents a segment of the text of length $n / (s dot.op tau^(h-1))$ for $h>0$.
 We call these segments _blocks_.
@@ -21,11 +21,11 @@ There can be three types of blocks:
 + _Leaf blocks_, which are exclusively the blocks on the last level. These store their substring of $S$ verbatim.
 ] <def:blocktree>
 
-An example Block Tree is depicted in @fig:mmblocktree.
+An example block tree is depicted in @fig:mmblocktree.
 
 #figure(
   caption: [
-    An example Block Tree (from "The Muffin Man"). Note, that while here the arity varies between the levels, this is only the case to make this example more clear.
+    An example block tree (from "The Muffin Man"). Note, that while here the arity varies between the levels, this is only the case to make this example more clear.
     Back blocks are depicted with dashed lines and the blocks they point to are dotted arrows.
     The last layer of the tree is saved verbatim. For the pruned version of this tree, see @fig:mmblocktree_pruned.
   ], 
@@ -104,7 +104,7 @@ This problem is handled in the subsequent pruning step.
 
 === Pruning Step
 
-As seen in @fig:mmblocktree, there is still redundancy in the Block Tree after the construction described until this point.
+As seen in @fig:mmblocktree, there is still redundancy in the block tree after the construction described until this point.
 For example, the second #inlinebox[M M] block on the third level of the tree (block $5$), could be replaced with a pointer to the first #inlinebox[M M] block (block $2$);
 We discussed in the previous section, that issues arise, when a back block points to another back block,
 which could occur if we were not to fingerprint block pairs when marking blocks.
@@ -122,11 +122,11 @@ If we reach a block $B_i$ that has a counter of zero and all its children are ei
 In doing so, we need to take care to decrement the counters of the blocks $B_i$'s children pointed to in case they were back blocks.
 Note, that we can only do this if $B_i$'s previous occurrence does not overlap itself.
 
-With this step done, the Block Tree from @fig:mmblocktree after pruning is depicted in @fig:mmblocktree_pruned.
+With this step done, the block tree from @fig:mmblocktree after pruning is depicted in @fig:mmblocktree_pruned.
 
 #figure(
   caption: [
-    The Block Tree from @fig:mmblocktree after pruning.
+    The block tree from @fig:mmblocktree after pruning.
   ], 
   image(
     "gfx/mmblocktree_pruned.svg",
