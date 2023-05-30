@@ -34,6 +34,7 @@ An example block tree is depicted in @fig:mmblocktree.
     width: 100%,
   )
 ) <fig:mmblocktree>
+#todo[remodel example to contain blocks not starting at offset 0]
 
 == Original Construction Algorithm
 
@@ -62,8 +63,8 @@ It is these blocks (and the last block if its counter is one) that are slated to
 To accomplish this, for a second pass we create another hash table containing the Rabin-Karp hash for all of the aforementioned blocks.
 Note that we hash single blocks now.
 We then scan once again with a sliding window, this time equal to the length of a block.
-Upon finding a block $B_i$'s earlier occurrence, say in blocks $B_j$ and $B_(j+1)$ at offset $l < |B_j|$, instead of $B_i$ we store a pointer to $B_j$ and $B_(j+1)$ with $l$ as its offset.
-This denotes, that $B_i$'s content is to be copied from $B_j$ starting at index $l$.
+Upon finding a block $B_i$'s earlier occurrence, say in blocks $B_j$ and $B_(j+1)$ at offset $ell < |B_j|$, instead of $B_i$ we store a pointer to $B_j$ and $B_(j+1)$ with $ell$ as its offset.
+This denotes, that $B_i$'s content is to be copied from $B_j$ starting at index $ell$.
 
 All remaining blocks are again subdivided into $tau$ children and the process is repeated for the next layer.
 We terminate the recursion, once the blocks are so small, that they fit into $Theta(lg_sigma n)$ bits if we were to save their content verbatim.
@@ -85,6 +86,7 @@ then then there is no other block pointing to $B_i$.
   In the latter case, it should point to the earlier occurrence of $B_i B_(i+1)$ instead.
   This is a contradiction with the fact that $B_j$ points to $B_i$.
 ]
+#todo[insert lemma here associated with the proof]
 
 When a query is made, this can lead to the query having to follow long chains of pointers on each level of the tree, 
 impacting performance and invalidating the logarithmic performance guarantees.

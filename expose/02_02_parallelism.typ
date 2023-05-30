@@ -32,8 +32,9 @@ which offers a simple way to quantify the complexity of a parallel algorithm.
 
 Work estimates the amount of total computation required by the algorithm, irrespective of the number of processors.
 An algorithm described in the work-time model can have any number of parallel computations in each parallel step.
+As a result, while using the work-time model makes designing algorithms simpler, in practice, cost might be more worth considering.
 
-Therefore, since @def:work does not consider the number of processors actually available (we could have less than the maximum amount of parallel computations used by the algorithm),
+Since @def:work does not consider the number of processors actually available (we could have less than the maximum amount of parallel computations used by the algorithm),
 the question may arise how these metrics translate to a machine with a limited number of $p$ processors.
 This problem is answered by @theo:scheduling-principle.
 
@@ -104,5 +105,5 @@ As a result, this algorithm is optimal according to @def:optimality, since $W(n)
 If we were to run this algorithm on a machine with $p$ processors, omitting most of the $cal(O)$-Notation for simplicity, we can use @theo:scheduling-principle to get
 $ T_p(n) = cal(O)((W(n))/p + T(n)) = cal(O)(n/p + lg n) = cal(O)(n/p + lg n) $
 We can see, that the optimal number of processors would be $p >= P(n) = cal(O)(n/(lg n))$ so that $T_p(n) = cal(O)(lg n)$.
-
-The resulting speedup is $ S_p(n) = (T^*(n))/(T_p(n)) = cal(O)((n) / (n/p + lg n)) $ and the optimal number of processors to reach this speedup is again $p = (T^*(n))/(T(n)) = n/(lg n)$
+The resulting speedup is $ S_p(n) = (T^*(n))/(T_p(n)) = cal(O)((n) / (n/p + lg n)) $ and the optimal number of processors to reach this speedup is again $p = (T^*(n))/(T(n)) = n/(lg n)$.
+This also results in the optimal speedup of $S_p(n) = p = cal(O)(n/(lg n))$
