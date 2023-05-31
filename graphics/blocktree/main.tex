@@ -10,7 +10,6 @@
 
 \def\letters{{"D","Y","K","T","M","M","T","M","M","T","M","M","D","Y","K","T","M","M","W","L","I","D","L","Y","I","K","T","M","M","T","M","M","T","M","M","Y"}}
 
-
 \begin{document}
 \begin{tikzpicture}[block/.style={draw,rectangle,minimum width=10pt,minimum height=1.7em},level/.style={sibling distance=40mm/#1},arrow/.style={draw=black, <-, shorten >=1pt}, edge from parent/.style={arrow}]
   \node[block] (root) at (0,0) {D Y K T M M T M M T M M D Y K T M M W L I D L Y I K T M M T M M T M M Y};
@@ -26,6 +25,26 @@
     \draw ([xshift=72pt * \n]root.south west) -- ++(0,3pt);  
     \draw[->] ([xshift=36pt + 72pt * \n]root.south west) -- (l1\n);  
   }
+
+  \iffalse
+  \node[block] (l20)  at (-11, -4) {D Y K};
+  \node[block] (l21)  at (- 9, -4) {T M M};
+  \node[block] (l22)  at (- 7, -4) {T M M};
+  \node[block] (l23)  at (- 5, -4) {T M M};
+  \node[block] (l24)  at (- 3, -4) {D Y K};
+  \node[block] (l25)  at (- 1, -4) {T M M};
+  \node[block] (l26)  at (  1, -4) {W L I};
+  \node[block] (l27)  at (  3, -4) {D L Y};
+  \node[block] (l28)  at (  5, -4) {I K T};
+  \node[block] (l29)  at (  7, -4) {M M T};
+  \node[block] (l210) at (  9, -4) {M M T};
+  \node[block] (l211) at ( 11, -4) {M M Y};
+
+  \foreach \i in {0,...,5} {
+    \draw[->] (l1\i) -- (l2\inteval{2*\i});
+    \draw[->] (l1\i) -- (l2\inteval{2*\i+1});
+  }
+  \fi
 
   \node[block] (l20) at (-11.2,-4) {D Y};
   \node[block] (l21) at (-10,-4) {K T};
@@ -54,20 +73,24 @@
 
   \draw[->,dotted] (l24.south west) |- ++(0,-0.2cm) -| (l22);
   \draw[->,dotted] (l27.south west) |- ++(0,-0.6cm) -| (l21.south west);
-  \draw[->,dotted] (l214.south west) |- ++(0,-0.2cm) -| (l22);
+  \draw[->,dotted] (l214.south west) |- ++(0,-0.2cm) -| (l22.south) ++(0,-0.075cm);
   \draw[->,dotted] (l215.south west) |- ++(0,-0.4cm) -| (l22.south west);
 
 
-  \foreach \i in {0,1,2,3,5,6,8,9,10,11,12,13,16,17} {
-    \node[block,below left=2 and 0.05 of l2\i.north] (l3\inteval{2*\i}) {
-      \pgfmathparse{\letters[\inteval{2*\i}]}\pgfmathresult
-    }; 
-    \node[block,below right=2 and 0.05 of l2\i.north] (l3\inteval{2*\i+1}) {
-      \pgfmathparse{\letters[\inteval{2*\i+1}]}\pgfmathresult
-    }; 
+  \foreach \i in {0,1,2,3,5,6,8,9,10,11,12,13,14,16,17} {
+      \node[block,below left=2 and 0.05 of l2\i.north] (l3\inteval{2*\i}) {
+        \pgfmathparse{\letters[\inteval{2*\i}]}\pgfmathresult
+      }; 
+      \node[block,below right=2 and 0.05 of l2\i.north] (l3\inteval{2*\i+1}) {
+        \pgfmathparse{\letters[\inteval{2*\i+1}]}\pgfmathresult
+      }; 
     \draw[->] (l2\i) -- (l3\inteval{2*\i});
     \draw[->] (l2\i) -- (l3\inteval{2*\i+1});
   }
+
+  \draw[line width=0.5mm] (l22.south) |- ++(0,-0.25mm) -| (l23.south);
+  \draw[line width=0.5mm] (l22.south west) |- ++(0,0.25mm) -| (l22.south east);
+  \draw[line width=0.5mm] (l21.south west) |- ++(0,0.25mm) -| (l21.south east);
 
 
 \end{tikzpicture}

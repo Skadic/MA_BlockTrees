@@ -53,12 +53,12 @@
   }
 
   \draw[->,dotted] (l12.south west) |- ++(0,-0.2cm) -| (l10.south west);
-  \draw[->,dotted] (l24.south west) |- ++(0,-0.2cm) -| (l22);
+  \draw[->,dotted] (l24.south west) |- ++(0,-0.2cm) -| (l22.south) ++ (0,-0.5mm);
   \draw[->,dotted] (l25.south west) |- ++(0,-0.4cm) -| (l22.south west);
-  \draw[->,dotted] (l213.south west) |- ++(0,-0.6cm) -| (l21);
-  \draw[->,dotted] (l214.south west) |- ++(0,-0.2cm) -| (l22);
+  \draw[->,dotted] (l213.south west) |- ++(0,-0.6cm) -| (l21.south) ++ (0,-0.5mm);
+  \draw[->,dotted] (l214.south west) |- ++(0,-0.2cm) -| (l22.south) ++ (0,-0.5mm);
   \draw[->,dotted] (l215.south west) |- ++(0,-0.4cm) -| (l22.south west);
-  \draw[->,dotted] (l216.south west) |- ++(0,-0.6cm) -| (l21);
+  \draw[->,dotted] (l216.south west) |- ++(0,-0.6cm) -| (l21.south) ++ (0,-0.5mm);
 
   \foreach \i in {0,1,2,3,9,10,11,12,17} {
     \node[block,below left=2 and 0.05 of l2\i.north] (l3\inteval{2*\i}) {
@@ -70,6 +70,12 @@
     \draw[->] (l2\i) -- (l3\inteval{2*\i});
     \draw[->] (l2\i) -- (l3\inteval{2*\i+1});
   }
+
+  \draw[line width=0.5mm] (l10.south west) |- ++(0,0.25mm) -| (l10.south east);
+
+  \draw[line width=0.5mm] (l22.south) ++ (0.75mm,0) |- ++(0,0.25mm) -| (l23.south);
+  \draw[line width=0.5mm] (l21.south) |- ++(0,0.25mm) -| (l22.south) ++ (-1.5mm,0);
+  \draw[line width=0.5mm] (l22.south west) |- ++(0,-0.25mm) -| (l22.south east);
 
 
 \end{tikzpicture}

@@ -34,12 +34,11 @@ An example block tree is depicted in @fig:mmblocktree.
     width: 100%,
   )
 ) <fig:mmblocktree>
-#todo[remodel example to contain blocks not starting at offset 0]
 
 == Original Construction Algorithm
 
 The original block tree construction algorithm @belazzougui_block_2021 builds the tree layer by layer starting at the topmost layer.
-If $v$ is a node in the tree, we write $l_v$ to denote the level of the tree $v$ is found at.
+If $v$ is a node in the tree, we write $ell_v$ to denote the level of the tree $v$ is found at.
 The following definitions are in respect to the layer of the tree that is currently in discussion.
 We call $B^v$ the block, that is the corresponding substring of $S$ while $B_i$ refers to the $i$-th block on this level.
 The topmost layer is obtained by splitting the text into $s$ blocks of equal length.
@@ -79,14 +78,17 @@ However, this could lead to the situation depicted in @fig:single_pass_bt_proble
 If only one pass is used, this might lead to back blocks, pointing to other back blocks.
 
 However, if we first search for block pairs and only replace blocks $B_i$ for which both $B_(i-1) B_i$ and $B_i B_(i+1)$ have an earlier occurence,
-then then there is no other block pointing to $B_i$.
+then we get @lem:twopass.
+#lemma[
+  If only blocks $B_i$ are replaced, for which $B_(i-1) B_i$ and $B_i B_(i+1)$ have an earlier occurrence
+  then there is no back block pointing to $B_i$.
+] <lem:twopass>
 #proof[
   Say there is a back block $B_j$ with $j > i$ where the range it copies from overlaps $B_i$. Then either $B_j$ points to $B_(i-1)$ or $B_i$ itself.
   If it is the former, then it should instead point to the earlier occurrence of $B_(i-1) B_i$ since it is further to the left.
   In the latter case, it should point to the earlier occurrence of $B_i B_(i+1)$ instead.
   This is a contradiction with the fact that $B_j$ points to $B_i$.
 ]
-#todo[insert lemma here associated with the proof]
 
 When a query is made, this can lead to the query having to follow long chains of pointers on each level of the tree, 
 impacting performance and invalidating the logarithmic performance guarantees.

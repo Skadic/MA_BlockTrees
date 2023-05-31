@@ -17,7 +17,8 @@ Data structures that index texts are known in the literature, notable examples b
 Many such indices require efficient #emph[access], #emph[rank], and #emph[select] queries on arbitrary strings over an ordered alphabet to facilitate searches using them.
 Traditionally, data structures like the #emph[wavelet tree] @grossi_high-order_2003 have been used to implement rank and select queries on strings.
 While the Wavelet Tree can be compressed to require asymptotically equal space to the Huffman-compressed text @huffman_method_1952, this does not adequately take advantage of the redundancies contained in highly repetitive text.
-An example of such repetitive texts is collections of DNA sequence.
+A text is highly repetitive, if it contains high amounts of repeated substrings.
+An example is collections of DNA sequence.
 
 One method of taking advantage of redundancies in repetitive texts is the #emph[LZ77 parsing] @ziv_universal_1977 by Lempel and Ziv.
 As an important component of popular compressors like #emph[gzip]#urlfootnote("https://www.gzip.org/", [30.05.23]), work has been done on approximations with more efficient construction #cite("bille_lempel-ziv_2017","ferreira_time_2009") and parallel implementations of the parsing @shun_practical_2013.
@@ -86,8 +87,8 @@ the recursion depth to which this compression is worth it, remains to be explore
 
 We will implementing in C++ using OpenMP#urlfootnote("https://www.openmp.org/", [30.05.23]) for parallelism.
 The concurrent hash map implementation#urlfootnote("https://github.com/TooBiased/growt", [30.05.23]) to be used is by Maier et al. @maier_concurrent_2019.
-For compressed vectors, Patrick Dinklage's implementation will be used#urlfootnote("https://github.com/pdinklag/word-packing", [30.05.23]) and Florian Kurpicz' implementation#urlfootnote("https://github.com/pasta-toolbox/bit_vector", [30.05.23]) #todo[cite florian's paper] for bit vectors with rank and select support.
-Our block tree implementation will be compared to the one by Manuel Cáceres'#urlfootnote("https://github.com/elarielcl/MinimalistBlockTrees", [30.05.23]).
+For compressed vectors, Patrick Dinklage's implementation will be used#urlfootnote("https://github.com/pdinklag/word-packing", [30.05.23]) and Florian Kurpicz' implementation#urlfootnote("https://github.com/pasta-toolbox/bit_vector", [30.05.23]) @kurpicz_engineering_2022.
+Our block tree implementation will be compared to the one by Manuel Cáceres#urlfootnote("https://github.com/elarielcl/MinimalistBlockTrees", [30.05.23]).
 We will test all implementations on large, primarily repetitive, texts such as those from the Pizza & Chili corpus#urlfootnote("http://pizzachili.dcc.uchile.cl/", [30.05.23]).
 
 These are subject to change, in case better-suited alternatives are found or problems arise.
@@ -96,7 +97,7 @@ These are subject to change, in case better-suited alternatives are found or pro
 
 The first section will be a brief introduction into the topic, which is followed by a section of theoretical foundations relevant to this thesis.
 Next, we describe block trees themselves and their construction more extensively.
-This is followed by a description of implementation details for the implementation of this thesis.
+This is followed by a description of implementation details for the implementati#todo[cite florian's paper] for bit vectors with rank and select support.on of this thesis.
 The last two sections will be a practical evaluation and a closing section discussing the results and future possible work.
 The resulting tentative outline is as follows:
 

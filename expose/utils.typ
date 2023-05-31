@@ -23,6 +23,13 @@
   body
 )
 
+#let lemma(body, numbered: true, title: none) = theorem(
+  numbered: numbered, 
+  supplement: [Lemma],
+  title: title,
+  body
+)
+
 #let todo(color: red, body) = box(width: 100%, inset: 0.5em, fill: color, radius: 0.2em,
   text(fill: white, font: sans-serif, [#strong( "TODO:") #body])
 )
