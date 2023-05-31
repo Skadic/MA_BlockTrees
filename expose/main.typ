@@ -1,7 +1,7 @@
 #import "template.typ": *
 #import "utils.typ": *
 #show: ieee.with(
-  title: "Parallel Block Tree Construction",
+  title: "Parallel Construction of Block Trees",
   author: "Etienne Palanga (201482)",
   examiners: ("Prof. Dr. Johannes Fischer", "Dr. Florian Kurpicz (Karlsruher Institut für Technologie)"),
   deadline: "November 2023",
